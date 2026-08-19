@@ -1,77 +1,116 @@
-# Lab 1 - Introduction to AWS Identity and Access Management (IAM)
+# Build Your VPC and Launch a Web Server (AWS) 
 
-## Title
-Introduction to AWS Identity and Access Management (IAM)
+## Author
 
+* **Name**: MADHUMITHA R
+* **Register Number**: 212224230158
+* **Date of Submission**: 19/08/2026
+
+---
 
 ## Objective
-The objective of this lab is to understand how AWS Identity and Access Management (IAM) controls authentication and authorization in AWS. The lab focuses on exploring IAM users and groups, analyzing attached policies, assigning users to appropriate groups based on organizational roles, and validating permissions by testing service access.
 
+The objective of this experiment is to understand how to design and configure a basic network infrastructure in AWS using a Virtual Private Cloud (VPC). This lab focuses on creating a VPC with a public subnet, configuring an Internet Gateway and route table, launching an EC2 instance, and hosting a simple web server that can be accessed over the internet.
+
+---
 
 ## Prerequisites
-- Basic understanding of cloud computing concepts  
-- AWS Academy Lab access  
-- Web browser with internet connectivity  
 
+* Basic understanding of cloud computing concepts
+* AWS account or AWS Academy Lab access
+* Web browser with internet connectivity
+
+---
 
 ## Tools Used
-- AWS Management Console  
-- AWS Identity and Access Management (IAM)  
-- Amazon EC2  
-- Amazon S3  
 
+* AWS Management Console
+* Amazon VPC
+* Amazon EC2
+* Internet Gateway
+* Route Table
+* Security Groups
+
+---
 
 ## Tasks Performed
 
-### Task 1: Explore IAM Users and Groups
-- Reviewed pre-created IAM users: user-1, user-2, user-3  
-- Explored IAM groups: EC2-Admin, EC2-Support, S3-Support  
-- Inspected managed and inline policies attached to groups  
-**Screenshot:**  
-<img width="1917" height="971" alt="Screenshot 2026-07-27 141001" src="https://github.com/user-attachments/assets/63b0dbd6-12da-429b-abd1-5019f3a95228" />
+### Task 1: Create a VPC
 
-### Task 2: Add Users to Groups
-- Added user-1 to the S3-Support group  
-- Added user-2 to the EC2-Support group  
-- Added user-3 to the EC2-Admin group  
-**Screenshot:**  
+Create a new Virtual Private Cloud (VPC) with a private IP address range. The VPC acts as a logically isolated network in AWS where all other resources will be deployed.
 
-<img width="1917" height="1020" alt="Screenshot 2026-07-27 142358" src="https://github.com/user-attachments/assets/603a5be7-e643-416c-a0c1-d18e802590c1" />
+Students should create a VPC with an appropriate CIDR block (for example, 10.0.0.0/16) and assign a meaningful name.
 
 
+### Task 2: Create a Public Subnet
 
-### Task 3: Test IAM User Permissions
-- Logged in using IAM sign-in URL  
-- Verified S3 access for user-1  
-- Verified EC2 read-only access for user-2  
-- Verified EC2 administrative access for user-3  
-**Screenshot:**  
+Create a subnet inside the VPC to host public resources. Enable auto-assign public IPv4 so that instances launched in this subnet receive a public IP address.
+
+The subnet should use a smaller CIDR range (for example, 10.0.1.0/24).
 
 
-<img width="1920" height="1080" alt="Screenshot 2026-07-27 144024" src="https://github.com/user-attachments/assets/7d554851-c4a4-47a7-8227-58b2015d5652" />
+### Task 3: Create and Attach Internet Gateway
+
+Create an Internet Gateway (IGW) and attach it to the VPC. This allows communication between resources in the VPC and the internet.
 
 
-## Workflow
-1. Accessed IAM console and reviewed users and groups.  
-2. Inspected policy permissions attached to groups.  
-3. Assigned users to groups based on their roles.  
-4. Logged in as each IAM user using the sign-in URL.  
-5. Validated permissions by accessing AWS services.  
+### Task 4: Configure Route Table
+
+Create a route table and add a default route (0.0.0.0/0) pointing to the Internet Gateway. Associate this route table with the public subnet.
+
+This step ensures that traffic from the subnet can reach the internet.
 
 
-## Learning Outcomes
-- Understood the role of IAM in AWS security.  
-- Learned how IAM users, groups, and policies interact.  
-- Gained practical experience implementing role-based access control.  
-- Verified permission enforcement through real-time service testing.  
+### Task 5: Create Security Group
+
+Create a security group to act as a virtual firewall for the EC2 instance. Configure inbound rules to allow:
+
+SSH on port 22
+
+HTTP on port 80
 
 
-## Conclusion
-This lab provided hands-on experience with AWS IAM by demonstrating how organizations manage secure access to cloud resources. Assigning users to groups with predefined policies simplified permission management and ensured role-based access control across AWS services.
+### Task 6: Launch EC2 Instance
+
+Launch an EC2 instance inside the public subnet using Amazon Linux 2 AMI and a suitable instance type (t2.micro).
+
+Attach the previously created security group and key pair.
 
 
-## Author
-**Name:** Madhumitha R
-**Course:** Introduction to Cloud Computing  
+### Task 7: Configure Web Server
+
+Install and start a web server (Apache HTTPD) on the EC2 instance using user data or manual commands.
+
+Create a simple HTML page and verify that it can be accessed from a web browser using the public IP address of the instance.---
+
+## Workflow (Student Explanation)
+
+1.I logged in to the AWS Management Console and created a new VPC with the CIDR block 10.0.0.0/16 to provide an isolated network environment for my resources.
+
+2.Inside the VPC, I created a public subnet with the CIDR block 10.0.1.0/24 and enabled Auto-assign Public IPv4 Address so that instances launched in the subnet 
+
+could receive public IP addresses.
+
+3.I created an Internet Gateway (IGW) and attached it to the VPC. Then, I created a route table, added a default route (0.0.0.0/0) pointing to the IGW, and 
+
+associated the route table with the public subnet to enable internet connectivity.
+
+4.Next, I created a security group and configured inbound rules to allow SSH (Port 22) for remote access and HTTP (Port 80) for web traffic. After that, I 
+
+launched an Amazon EC2 instance using the Amazon Linux 2 AMI in the public subnet and attached the security group and key pair.
+
+5.Finally, I connected to the EC2 instance, installed and started the Apache HTTP Server (httpd), created a simple HTML web page, and verified that the website 
+
+was accessible through a web browser using the instance's public IP address.
+
+## Output Screenshots (Attach 3)
+<img width="1917" height="936" alt="Screenshot 2026-08-17 141752" src="https://github.com/user-attachments/assets/24b33507-c1d0-439c-932a-ff68f2815cff" />
 
 
+<img width="1909" height="928" alt="Screenshot 2026-08-17 142039" src="https://github.com/user-attachments/assets/2e61b51c-b8c7-4a94-b91b-796c5fe672e8" />
+
+<img width="1911" height="986" alt="Screenshot 2026-08-17 144652" src="https://github.com/user-attachments/assets/04525aa9-5736-4c30-b66a-2582b6e10537" />
+
+## Result 
+
+This experiment successfully demonstrated the creation of a custom VPC and deployment of a public-facing web server in AWS. By configuring networking components such as subnets, route tables, and security groups, and by launching an EC2 instance with a web server, the basic architecture of a cloud-hosted application was understood.
