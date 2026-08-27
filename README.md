@@ -1,25 +1,29 @@
-# Lab 5 – Build a Database Server (AWS)
+# Lab 6 – Scale and Load Balance Your Architecture
 
-## Author
+## Title
 
-* **Name**: MADHUMITHA R
-* **Register Number**: 212225230158
-* **Date of Submission**:27/08/2026
+Scale and Load Balance Your Architecture
+---
+Author : MADHUMITHA R
+
+Reg no : 212225230158
+
+Date : 27-08-2026
 
 ---
 
 ## Objective
 
-The objective of this experiment is to understand how to deploy and configure a database server in AWS. This lab focuses on launching an EC2 instance, installing a database management system (DBMS), configuring basic database settings, creating a sample database, and validating connectivity to the database server.
+The objective of this lab is to understand how to design a scalable and highly available architecture on AWS using Auto Scaling and Elastic Load Balancing. This experiment focuses on distributing incoming traffic across multiple EC2 instances, automatically scaling resources based on demand, and validating fault tolerance.
 
 ---
 
 ## Prerequisites
 
-* Basic understanding of cloud computing concepts
-* AWS account or AWS Academy Lab access
-* An existing VPC and EC2 knowledge (from previous labs)
-* Basic knowledge of Linux commands and SQL
+* Basic knowledge of Amazon EC2 and VPC
+* Completion of previous labs (IAM, EC2, EBS, Database Server)
+* AWS Academy Lab access
+* Stable internet connection
 
 ---
 
@@ -27,102 +31,68 @@ The objective of this experiment is to understand how to deploy and configure a 
 
 * AWS Management Console
 * Amazon EC2
-* Security Groups
-* SSH Client (Terminal / PuTTY)
-* MySQL / MariaDB / PostgreSQL (any one)
+* Elastic Load Balancer (ELB / ALB)
+* Auto Scaling Groups (ASG)
+* Amazon CloudWatch
 
 ---
 
 ## Tasks Performed
 
-### Task 1: Launch EC2 Instance for Database Server
+### Task 1: Review Existing Architecture
 
-Launch a new EC2 instance using Amazon Linux 2 AMI. Select an appropriate instance type and configure key pair and security group.
+Students review the existing EC2-based application architecture created in previous experiments.
 
----
+### Task 2: Create a Launch Template
 
-### Task 2: Configure Security Group for Database Access
+Students create a launch template that defines the EC2 instance configuration including AMI, instance type, security group, and user data.
 
-Modify the security group to allow:
+### Task 3: Create an Auto Scaling Group
 
-* SSH (Port 22) for remote access
-* Database port (e.g., MySQL – 3306 or PostgreSQL – 5432)
+Students create an Auto Scaling Group using the launch template and configure minimum, maximum, and desired instance capacity.
 
----
+### Task 4: Configure an Application Load Balancer
 
-### Task 3: Connect to EC2 Instance
+Students create an Application Load Balancer and configure target groups for routing traffic to EC2 instances.
 
-Connect to the EC2 instance using SSH from your local machine.
+### Task 5: Register Auto Scaling Group with Load Balancer
 
----
+Students attach the Auto Scaling Group to the target group of the load balancer.
 
-### Task 4: Install Database Server
+### Task 6: Configure Scaling Policies
 
-Install a database server software such as MySQL, MariaDB, or PostgreSQL on the EC2 instance using package manager commands.
+Students configure scaling policies based on CPU utilization using Amazon CloudWatch alarms.
 
----
+### Task 7: Test Load Balancing and Scaling
 
-### Task 5: Start and Configure Database Service
-
-Start the database service and configure basic settings such as root password and user privileges.
+Students test the setup by generating traffic and observing automatic scaling and load distribution.
 
 ---
 
-### Task 6: Create a Sample Database
-
-Create a sample database and a table inside it. Insert a few records into the table.
-
----
-
-### Task 7: Test Database Connectivity
-
-Test the database server by connecting to it locally or remotely and performing basic SQL queries.
-
----
-
-## Workflow (Student Explanation)
-
-(Write the steps you followed in your own words)
-First, a security group named DB Security Group was created to allow the web server to connect to the database using port 3306 (MySQL).
+## Workflow (To be filled by Student)
 
 
-A DB Subnet Group was created with subnets from two Availability Zones to allow the database to run in a Multi-AZ environment for high availability.
+1.Launched a new EC2 instance named Web Server in the N. Virginia region using Amazon Linux 2023 AMI and t2.micro instance type.
+
+2.Enabled termination protection and stop protection, configured a security group, and added a user data script to install and start an Apache web server.
+
+3.Monitored the instance using status checks, CloudWatch metrics, and system logs to ensure it was running properly.
+
+4.Modified the security group to allow HTTP (port 80) traffic and accessed the web server using the public IP address.
+
+5.Resized the instance to t2.small, increased the EBS volume size, explored EC2 service quotas, tested stop protection, and finally stopped the instance.
 
 
-A MySQL RDS instance named lab-db was created with the database name lab, username main, and password lab-password.
+## Output Screenshots 
+
+<img width="1920" height="1080" alt="1" src="https://github.com/user-attachments/assets/5da8ce5e-fe5c-4ee9-bf9d-fcda95b8965e" />
+<img width="1920" height="1080" alt="2" src="https://github.com/user-attachments/assets/b8a77390-7e2a-45fa-92eb-742ddda5bc2a" />
+<img width="1920" height="1080" alt="3" src="https://github.com/user-attachments/assets/d430dbb2-7174-4f37-95c4-eeed58cb1146" />
+<img width="1920" height="1080" alt="4" src="https://github.com/user-attachments/assets/97577215-001c-4145-b504-aea11428067a" />
 
 
-The database was associated with the DB Security Group and the Lab VPC so that the web server can securely connect to the database.
 
-
-The web application running on the EC2 server was opened using its IP address, and the RDS endpoint, database name, username, and password were entered to interact with the database.
-
-
----
-
-## Output Screenshots (Attach 3)
-
-### Screenshot 1: EC2 Instance for Database Server
-
-<img width="1846" height="908" alt="image" src="https://github.com/user-attachments/assets/85556f83-8362-482b-8112-fb2dbbd7e7f5" />
-
-
----
-
-### Screenshot 2: Database Service Running
-
-<img width="1782" height="864" alt="image" src="https://github.com/user-attachments/assets/c38cd7ff-fc8f-4568-b9f9-7c7531791318" />
-
-
----
-
-### Screenshot 3: Sample Database and Table
-
-<img width="1645" height="803" alt="image" src="https://github.com/user-attachments/assets/85c8920e-d15f-4468-b78c-73055ff02ffd" />
-
-
----
 
 ## Result
 
-This experiment demonstrated how to build a database server in AWS using an EC2 instance. By installing and configuring a DBMS, creating a sample database, and testing connectivity, the fundamentals of hosting and managing a cloud-based database server were underst
+This experiment demonstrated how to build a scalable and fault-tolerant cloud architecture using Auto Scaling Groups and Elastic Load Balancing. The system automatically adjusted resources based on workload and ensured continuous service availability by distributing traffic across multiple instances.
